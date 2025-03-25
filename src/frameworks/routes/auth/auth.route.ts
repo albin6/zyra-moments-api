@@ -1,12 +1,10 @@
-import { Request, Response } from "express";
+
 import { BaseRoute } from "../base.route";
 import {
   googleController,
   loginController,
   registerController,
   sendEmailController,
-  updateNewPasswordController,
-  verifyExistingEmailController,
   veryfyOTPController,
 } from "../../di/resolver";
 import { asyncHandler } from "../../../shared/async-handler";
@@ -42,18 +40,18 @@ export class AuthRoutes extends BaseRoute {
       asyncHandler(veryfyOTPController.handle.bind(veryfyOTPController))
     );
 
-    this.router.post(
-      "/verify-email",
-      asyncHandler(
-        verifyExistingEmailController.handle.bind(verifyExistingEmailController)
-      )
-    );
+    // this.router.post(
+    //   "/verify-email",
+    //   asyncHandler(
+    //     verifyExistingEmailController.handle.bind(verifyExistingEmailController)
+    //   )
+    // );
 
-    this.router.patch(
-      "/password",
-      asyncHandler(
-        updateNewPasswordController.handle.bind(updateNewPasswordController)
-      )
-    );
+    // this.router.patch(
+    //   "/password",
+    //   asyncHandler(
+    //     updateNewPasswordController.handle.bind(updateNewPasswordController)
+    //   )
+    // );
   }
 }

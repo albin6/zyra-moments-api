@@ -1,9 +1,10 @@
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor/vendor-repository.interface";
 import { IUpdatePasswordStrategy } from "./update-password-strategy.interface";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 
+@injectable()
 export class UpdateVendorPasswordStrategy implements IUpdatePasswordStrategy {
   constructor(
     @inject("IVendorRepository") private vendorRepository: IVendorRepository

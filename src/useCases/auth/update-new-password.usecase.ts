@@ -9,9 +9,9 @@ export class UpdateNewPasswordUseCase implements IUpdateNewPasswordUseCase {
   private _strategies: Record<string, IUpdatePasswordStrategy>;
 
   constructor(
-    @inject("IUpdatePasswordStrategy")
+    @inject("UpdateClientPasswordStrategy")
     private updateClientPasswordStrategy: IUpdatePasswordStrategy,
-    @inject("IUpdatePasswordStrategy")
+    @inject("UpdateVendorPasswordStrategy")
     private updateVendorPassowordStrategy: IUpdatePasswordStrategy
   ) {
     this._strategies = {

@@ -4,7 +4,8 @@ dotenv.config();
 export const config = {
   // CORS Configuration
   cors: {
-    ALLOWED_ORIGIN: process.env.CORS_ALLOWED_ORIGIN || "http://localhost:5173",
+    ALLOWED_ORIGIN_ONE: process.env.CORS_ALLOWED_ORIGIN_ONE || "http://localhost:5173",
+    ALLOWED_ORIGIN_TWO: process.env.CORS_ALLOWED_ORIGIN_TWO || "http://localhost:5174",
   },
 
   // Server Configuration
@@ -36,8 +37,7 @@ export const config = {
   },
 
   jwt: {
-    ACCESS_SECRET_KEY: process.env.JWT_ACCESS_KEY || "your-secret-key",
-    REFRESH_SECRET_KEY: process.env.JWT_REFRESH_KEY || "your-secret-key",
+    JWT_SECRET_KEY: process.env.JWT_ACCESS_KEY || "your-secret-key",
     ACCESS_EXPIRES_IN: process.env.JWT_ACCESS_EXPIRES_IN || "",
     REFRESH_EXPIRES_IN: process.env.JWT_REFRSH_EXPIRES_IN || "",
   },

@@ -41,7 +41,7 @@ export class ChatController implements IChatController {
   initialize(server: Server): void {
     this.io = new SocketIOServer(server, {
       cors: {
-        origin: config.cors.ALLOWED_ORIGIN,
+        origin: [config.cors.ALLOWED_ORIGIN_ONE, config.cors.ALLOWED_ORIGIN_TWO],
         methods: ["GET", "POST"],
         credentials: true,
       },

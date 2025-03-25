@@ -14,7 +14,6 @@ export class WebHookUseCase implements IWebHookUseCase {
   constructor(
     @inject("IPaymentService") private paymentService: IPaymentService
   ) {
-    console.log("in webhook handle usecase");
     this.stripe = new Stripe(config.stripe.sk, {
       apiVersion: "2025-01-27.acacia",
     });
