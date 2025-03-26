@@ -5,8 +5,8 @@ pipeline {
         ECR_REGISTRY = '630222198179.dkr.ecr.us-east-1.amazonaws.com'
         ECR_REPO = 'zyra-moments-api'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
-        ECS_CLUSTER = 'zyra-moments-cluster'
-        ECS_SERVICE = 'zyra-moments-service'
+        ECS_CLUSTER = 'new-zyra-moments-cluster'
+        ECS_SERVICE = 'new-zyra-moments-service'
     }
     stages {
         stage('Checkout') {
