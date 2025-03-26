@@ -6,6 +6,7 @@ export const config = {
   cors: {
     ALLOWED_ORIGIN_ONE: process.env.CORS_ALLOWED_ORIGIN_ONE || "http://localhost:5173",
     ALLOWED_ORIGIN_TWO: process.env.CORS_ALLOWED_ORIGIN_TWO || "http://localhost:5174",
+    ALLOWED_ORIGIN_LOCAL: process.env.CORS_ALLOWED_ORIGIN_LOCAL || "http://localhost:5174",
   },
 
   // Server Configuration
