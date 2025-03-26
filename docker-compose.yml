@@ -8,6 +8,7 @@ services:
       - REDIS_URI=redis://redis:6379
       - CORS_ALLOWED_ORIGIN_ONE=https://zyramoments.in
       - CORS_ALLOWED_ORIGIN_TWO=https://www.zyramoments.in
+      - CORS_ALLOWED_ORIGIN_LOCAL=http://localhost:8080
       - DATABASE_URI=mongodb+srv://albinpariyarath:BPpLWkO7GqMfRJSw@zyraeventscluster.q9pgf.mongodb.net/zyra-moments?retryWrites=true&w=majority&appName=zyraEventsCluster
       - EMAIL_USER=zyramoments.org@gmail.com
       - EMAIL_PASS=zspa bwtv nstp ofjh
