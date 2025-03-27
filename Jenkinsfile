@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         AWS_REGION = 'ap-south-1'
-        ECR_REGISTRY = '630222198179.dkr.ecr.us-east-1.amazonaws.com'
+        ECR_REGISTRY = '630222198179.dkr.ecr.ap-south-1.amazonaws.com'
         ECR_REPO = 'zyra-moments-api'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         ECS_CLUSTER = 'new-zyra-moments-cluster'
@@ -25,7 +25,8 @@ pipeline {
             steps {
                 script {
                     sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
-                    dockerImage.push()
+                    dockerImage.push("${IMAGE_TAG}")
+                    dockerImage.push("latest")
                 }
             }
         }
