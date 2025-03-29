@@ -7,7 +7,7 @@ export interface IMessageEntity {
   senderId: string;
   senderType: "Client" | "Vendor";
   read: boolean;
-  readReceipt: "sent" | "delivered" | "seen"
+  // readReceipt: "sent" | "delivered" | "seen"
   createdAt?: Date;
   updatedAt?: Date;
 }
