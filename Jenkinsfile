@@ -4,7 +4,6 @@ pipeline {
         AWS_REGION = 'ap-south-1'
         ECR_REGISTRY = '630222198179.dkr.ecr.ap-south-1.amazonaws.com'
         ECR_REPO = 'zyra-moments-api'
-        IMAGE_TAG = "${env.BUILD_NUMBER}"
         ECS_CLUSTER = 'new-zyra-moments-cluster'
         ECS_SERVICE = 'new-zyra-moments-service'
     }
@@ -12,6 +11,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/albin6/zyra-moments-api.git'
+            }
+        }
+        stage('Set Image Tag') {
+            steps {
+                script {
+                    env.IMAGE_TAG = env.BUILD_NUMBER
+                }
             }
         }
         stage('Build Docker Image') {
