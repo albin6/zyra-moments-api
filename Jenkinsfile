@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:latest'
+            args '--privileged'
+        }
+    }
     environment {
         AWS_REGION = 'ap-south-1'
         ECR_REGISTRY = '630222198179.dkr.ecr.ap-south-1.amazonaws.com'
