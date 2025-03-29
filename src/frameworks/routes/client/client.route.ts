@@ -37,9 +37,9 @@ export class ClientRoutes extends BaseRoute {
     this.router
       .route("/client/details")
       .get(
-        // verifyAuth,
-        // authorizeRole(["client"]),
-        // blockStatusMiddleware.checkBlockedStatus as RequestHandler,
+        verifyAuth,
+        authorizeRole(["client"]),
+        blockStatusMiddleware.checkBlockedStatus as RequestHandler,
         asyncHandler(
           getClientDetailsController.handle.bind(getClientDetailsController)
         )
