@@ -17,6 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Define dockerImage globally to ensure scope carries over
                     dockerImage = docker.build("${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}")
                 }
             }
@@ -24,16 +25,24 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 script {
-                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
-                    dockerImage.push("${IMAGE_TAG}")
-                    dockerImage.push("latest")
+                    // Use withDockerRegistry to handle ECR login
+                    withDockerRegistry(
+                        credentialsId: 'ecr:ap-south-1:aws-cred-id', // Replace with your AWS creds ID
+                        url: "https://${ECR_REGISTRY}"
+                    ) {
+                        dockerImage.push("${IMAGE_TAG}")
+                        dockerImage.push("latest")
+                    }
                 }
             }
         }
         stage('Deploy to ECS') {
             steps {
                 script {
-                    sh "aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}"
+                    // Use withAWS for ECS deployment
+                    withAWS(credentials: 'aws-cred-id', region: "${AWS_REGION}") {
+                        sh "aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment"
+                    }
                 }
             }
         }
