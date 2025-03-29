@@ -46,6 +46,7 @@ export class ChatController implements IChatController {
         credentials: true,
       },
       path: "/api/v_1/_chat",
+      maxHttpBufferSize: 1e8
       // allowRequest: (
       //   req: IncomingMessage,
       //   callback: (err: string | null | undefined, success: boolean) => void
