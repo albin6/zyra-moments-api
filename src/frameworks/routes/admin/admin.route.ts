@@ -1,7 +1,5 @@
-import { NextFunction, Request, Response } from "express";
 import {
   createNewCategoryController,
-  getAllBookingByClientController,
   getAllBookingController,
   getAllCategoryJoinRequestController,
   getAllFundReleaseRequestController,
@@ -49,16 +47,16 @@ export class AdminRoutes extends BaseRoute {
       )
     );
 
-    this.router.get(
-      "/admin/client-bookings",
-      verifyAuth,
-      authorizeRole(["admin"]),
-      asyncHandler(
-        getAllBookingByClientController.handle.bind(
-          getAllBookingByClientController
-        )
-      )
-    );
+    // this.router.get(
+    //   "/admin/client-bookings",
+    //   verifyAuth,
+    //   authorizeRole(["admin"]),
+    //   asyncHandler(
+    //     getAllBookingByClientController.handle.bind(
+    //       getAllBookingByClientController
+    //     )
+    //   )
+    // );
 
     this.router
       .route("/admin/categories")

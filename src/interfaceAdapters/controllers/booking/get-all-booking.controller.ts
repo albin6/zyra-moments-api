@@ -41,6 +41,8 @@ export class GetAllBookingController implements IGetAllBookingController {
       statusFilterString
     );
 
+    console.log('booking from db=>', bookings)
+
     res.status(HTTP_STATUS.OK).json({
       success: true,
       bookings,
