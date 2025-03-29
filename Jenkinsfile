@@ -1,5 +1,5 @@
 pipeline {
-    agent none // No default agent; define per stage
+    agent none
     environment {
         AWS_REGION = 'ap-south-1'
         ECR_REGISTRY = '630222198179.dkr.ecr.ap-south-1.amazonaws.com'
@@ -9,13 +9,13 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            agent { label 'master' } // Or any node with Git installed
+            agent { label 'master' }
             steps {
                 git branch: 'main', url: 'https://github.com/albin6/zyra-moments-api.git'
             }
         }
         stage('Set Image Tag') {
-            agent { label 'master' } // Minimal resources needed here
+            agent { label 'master' }
             steps {
                 script {
                     env.IMAGE_TAG = env.BUILD_NUMBER
@@ -26,7 +26,7 @@ pipeline {
             agent {
                 docker { 
                     image 'docker:latest' 
-                    args '-v /var/run/docker.sock:/var/run/docker.sock' // Access to Docker daemon
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
@@ -38,8 +38,8 @@ pipeline {
         stage('Push to ECR') {
             agent {
                 docker { 
-                    image 'amazon/aws-cli:latest' // AWS CLI for ECR login
-                    args '-v /var/run/docker.sock:/var/run/docker.sock' // Still need Docker
+                    image 'amazon/aws-cli:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
@@ -56,7 +56,7 @@ pipeline {
         stage('Deploy to ECS') {
             agent {
                 docker { 
-                    image 'amazon/aws-cli:latest' // AWS CLI for ECS deployment
+                    image 'amazon/aws-cli:latest'
                 }
             }
             steps {
