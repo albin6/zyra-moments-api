@@ -18,7 +18,7 @@ services:
       - JWT_REFRSH_EXPIRES_IN=30m
       - STRIPE_PK=pk_test_51QE3X1K0oDaPVFn3LIORvughq1FbieLfPX2EsvTWv5Qze2L5lcCfoYbgaPzu631Y3bigxeNTNLdB6qIppsRTrZ9s00Ryy6xijQ
       - STRIPE_SK=sk_test_51QE3X1K0oDaPVFn3rNQhFFabqyMkvmNda6HVrwezGdpeMyfxkteJO9EHHhavgNh9wLqStjs5TksQo0aJznq1WpxX003k9zyQpJ
-      - STRIPE_WEBHOOK_SECRET=whsec_9c518ec26622eb699b1d75080d4e688ff77f42060ceef336795fe52d9243f150
+      - STRIPE_WEBHOOK_SECRET=whsec_ebklHj2KFSwsUA6TFmSFqA8DCm5zX0ph
     depends_on:
       - redis
   redis:
