@@ -8,15 +8,15 @@ pipeline {
         }
         stage('Build and Deploy') {
             steps {
-                sh 'docker-compose down' // Stop existing containers
-                sh 'docker-compose build' // Build images
-                sh 'docker-compose up -d' // Start containers
+                sh 'docker-compose down'
+                sh 'docker-compose build'
+                sh 'docker-compose up -d'
             }
         }
     }
     post {
         always {
-            sh 'docker system prune -f' // Clean up unused Docker objects
+            sh 'docker system prune -f'
         }
     }
 }
