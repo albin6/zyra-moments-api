@@ -43,7 +43,7 @@ export class CancelTicketUseCase implements ICancelTicketUseCase {
         ticket.paymentId
       ),
       await this.walletRepository.findWalletByUserIdAndUpdateBalanceForCancel(
-        "67cef9adee1eeefc92f10237" as string,
+        "67e9486d0d98008b2de2c7ce" as string,
         populatedTicket.eventId.pricePerTicket * -1,
       ),
     ]);

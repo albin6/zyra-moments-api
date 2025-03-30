@@ -80,7 +80,7 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
         paymentId
       ),
       this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
-        "67cef9adee1eeefc92f10237" as string,
+        "67e9486d0d98008b2de2c7ce" as string,
         booking.totalPrice * -1,
         paymentId
       ),
