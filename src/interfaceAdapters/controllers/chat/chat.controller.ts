@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IChatController } from "../../../entities/controllerInterfaces/chat/chat-controller.interface";
 import { Server as SocketIOServer, Socket } from "socket.io";
-import { IncomingMessage, Server } from "http";
+import { Server } from "http";
 import { Request, Response } from "express";
 import { config } from "../../../shared/config";
 import { IClientRepository } from "../../../entities/repositoryInterfaces/client/client-respository.interface";
@@ -13,9 +13,6 @@ import { IMarkMessagesAsReadUseCase } from "../../../entities/useCaseInterfaces/
 import { IMessageRepository } from "../../../entities/repositoryInterfaces/chat/message-repository.interface";
 import { IChatRoomRepository } from "../../../entities/repositoryInterfaces/chat/chat-room-repository.interface";
 import { ITokenService } from "../../../useCases/auth/interfaces/token-service.interface";
-import { CustomError } from "../../../entities/utils/custom-error";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
-import { CustomRequest } from "../../middlewares/auth.middleware";
 
 @injectable()
 export class ChatController implements IChatController {
@@ -159,17 +156,21 @@ export class ChatController implements IChatController {
 
       socket.on(
         "sendMessage",
-        async ({ chatRoomId, senderId, senderType, content }) => {
+        async ({ chatRoomId, senderId, senderType, content, file }) => {
           const chatRoom = await this.chatRoomRepository.findById(chatRoomId);
           if (!chatRoom) throw new Error("Chat room not found");
+
+          console.log('here is the content => ', content, 'here is the file if have =>', file)
           const message = await this.sendMessageUseCase.execute(
             senderType === "Client" ? senderId : chatRoom.clientId.toString(),
             senderType === "Vendor" ? senderId : chatRoom.vendorId.toString(),
             senderId,
             senderType,
             content,
-            chatRoomId
+            chatRoomId,
+            file,
           );
+          console.log('here is the message =>',message)
           this.io
             ?.to(chatRoom.clientId.toString())
             .to(chatRoom.vendorId.toString())

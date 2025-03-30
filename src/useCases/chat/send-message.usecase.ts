@@ -21,8 +21,11 @@ export class SendMessageUseCase implements ISendMessageUseCase {
     senderType: "Client" | "Vendor",
     content: string,
     chatRoomId?: string,
+    file?: string,
     bookingId?: string
   ): Promise<IMessageEntity> {
+    const isFile = (file && file.startsWith("https://res.cloudinary.com")) ? true : false
+    console.log('is file checkin in usecaase =>', isFile)
     let chatRoom;
   
     if (chatRoomId) {
@@ -35,27 +38,33 @@ export class SendMessageUseCase implements ISendMessageUseCase {
         vendorId,
         bookingId,
         {
-          content,
+          content: isFile ? "File" : content,
           senderId,
           senderType,
           createdAt: new Date(),
         }
       );
     }
+
+    console.log('after setting the last message')
   
     const message: IMessageEntity = {
       chatRoomId: chatRoom._id!.toString(),
-      content,
+      content : (file && isFile) ? file : content,
       senderId,
       senderType,
+      isFile: isFile,
       read: false,
       createdAt: new Date(),
     };
     const createdMessage = await this.messageRepository.create(message);
+
+    console.log('here is the created message : ', createdMessage)
+    console.log('befor updating the last message => file and is file', file, isFile)
   
     await this.chatRoomRepository.updateLastMessage(
       chatRoom._id!.toString(),
-      content,
+      (file && isFile) ? "file" : content,
       senderId,
       senderType,
       createdMessage.createdAt!

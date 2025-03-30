@@ -8,7 +8,12 @@ export const messageSchema = new Schema<IMessageModel>(
     senderId: { type: String, required: true },
     senderType: { type: String, enum: ["Client", "Vendor"], required: true },
     read: { type: Boolean, default: false },
-    // readReceipt: { type: String, enum: ["sent", "delivered", "seen"], default: "sent" },
+    isFile: { type: Boolean, default: false },
+    readReceipt: {
+      type: String,
+      enum: ["sent", "delivered", "seen"],
+      default: "sent",
+    },
   },
   {
     timestamps: true,

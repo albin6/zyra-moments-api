@@ -8,5 +8,6 @@ export interface ISendMessageUseCase {
     senderType: "Client" | "Vendor",
     content: string,
     chatRoomId?: string,
+    file?: string
   ): Promise<IMessageEntity>;
 }
