@@ -142,6 +142,7 @@ export class GetUserChatsUseCase implements IGetUserChatsUseCase {
               lastMessageTime: chatRoom.lastMessage?.createdAt,
               unreadCount: chatRoom.unreadCountClient || 0,
               recipientStatus: vendor.onlineStatus || "offline",
+              updatedAt: vendor.updatedAt
             };
           })
           .filter(Boolean); // Remove null entries
@@ -206,6 +207,7 @@ export class GetUserChatsUseCase implements IGetUserChatsUseCase {
               lastMessageTime: chatRoom.lastMessage?.createdAt,
               unreadCount: chatRoom.unreadCountVendor || 0,
               recipientStatus: client.onlineStatus || "offline",
+              updatedAt: client.updatedAt
             };
           })
           .filter(Boolean);

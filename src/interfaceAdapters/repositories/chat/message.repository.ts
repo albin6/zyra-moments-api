@@ -26,7 +26,7 @@ export class MessageRepository implements IMessageRepository {
           senderType: userType === "Client" ? "Vendor" : "Client",
           read: false,
         },
-        { $set: { read: true } }
+        { $set: { readReceipt: "seen", read: true } }
       ).exec();
       console.log('messages marked as read.')
     } catch (error) {

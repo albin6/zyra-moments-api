@@ -135,6 +135,7 @@ export class ChatController implements IChatController {
             ?.to(userId)
             .to(recipientId.toString())
             .emit("messagesUpdated", messages);
+            this.io?.to(chatRoomId).emit("readReceiptUpdate", messages[messages.length - 1]);
           this.io
             ?.to(userId)
             .to(recipientId.toString())
