@@ -47,6 +47,10 @@ export class MarkAttendanceUseCase implements IMarkAttendanceUseCase {
       return { success: false, message: "Ticket already used" };
     }
 
+    if (ticket.status === "CANCELLED") {
+      return { success: false, message: "Ticket is cancelled" };
+    }
+
     // Mark ticket as used
     await this.ticketRepository.markAsUsed(ticket._id!.toString());
 
