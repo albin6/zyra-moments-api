@@ -98,7 +98,7 @@ export class GetAllBookingUseCase implements IGetAllBookingUseCase {
       limit
     );
 
-    console.log('booking in useCase =>', bookings)
+    console.log("booking in useCase =>", bookings);
 
     return {
       bookings,

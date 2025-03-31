@@ -47,16 +47,20 @@ export class UpdateFundReleaseRequestStatusUseCase
       createdAt: new Date(),
     });
 
+    const commissionRate = 0.09;
+    const commissionAmount = request.totalAmount * commissionRate;
+    const organizerAmount = request.totalAmount - commissionAmount;
+
     await Promise.all([
       await this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
         request.organizerId,
-        request.totalAmount,
+        organizerAmount,
         payment?._id,
         true
       ),
       this.walletRepository.findWalletByUserIdAndUpdateBalanceForCancel(
         "67e9486d0d98008b2de2c7ce" as string,
-        request.totalAmount * -1,
+        (request.totalAmount - commissionAmount) * -1,
         payment._id as any
       ),
     ]);

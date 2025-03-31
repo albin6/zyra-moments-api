@@ -14,7 +14,11 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
     @inject("IPaymentRepository") private paymentRepository: IPaymentRepository
   ) {}
 
-  async execute(userId: string, bookingId: string, status: string): Promise<void> {
+  async execute(
+    userId: string,
+    bookingId: string,
+    status: string
+  ): Promise<void> {
     const booking = await this.bookingRepository.findById(bookingId);
     if (!booking) {
       throw new CustomError(
@@ -23,7 +27,10 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
       );
     }
 
-    await this.bookingRepository.findByIdAndUpdateBookingStatus(bookingId, status);
+    await this.bookingRepository.findByIdAndUpdateBookingStatus(
+      bookingId,
+      status
+    );
 
     if (status === "completed") {
       const payment = await this.paymentRepository.findByBookingId(bookingId);
@@ -38,20 +45,44 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
         let updatedBooking = null;
 
         // Client approval path
-        console.log('out client approval', userId === booking.userId!.toString())
-        if (userId === booking.userId!.toString() && !booking.isClientApproved) {
-          console.log('in client approval', userId)
-          updatedBooking = await this.bookingRepository.updateClientApproved(userId);
+        console.log(
+          "out client approval",
+          userId === booking.userId!.toString()
+        );
+        if (
+          userId === booking.userId!.toString() &&
+          !booking.isClientApproved
+        ) {
+          console.log("in client approval", userId);
+          updatedBooking = await this.bookingRepository.updateClientApproved(
+            userId
+          );
           if (updatedBooking?.isVendorApproved) {
-            await this.processWalletUpdates(bookingId, updatedBooking, payment._id!.toString());
+            await this.processWalletUpdates(
+              bookingId,
+              updatedBooking,
+              payment._id!.toString()
+            );
           }
-        } 
+        }
         // Vendor approval path
-        else if (userId === booking.vendorId!.toString() && !booking.isVendorApproved) {
-          console.log('in vendor approval', userId === booking.vendorId!.toString())
-          updatedBooking = await this.bookingRepository.updateVendorApproved(userId);
+        else if (
+          userId === booking.vendorId!.toString() &&
+          !booking.isVendorApproved
+        ) {
+          console.log(
+            "in vendor approval",
+            userId === booking.vendorId!.toString()
+          );
+          updatedBooking = await this.bookingRepository.updateVendorApproved(
+            userId
+          );
           if (updatedBooking?.isClientApproved) {
-            await this.processWalletUpdates(bookingId, updatedBooking, payment._id!.toString());
+            await this.processWalletUpdates(
+              bookingId,
+              updatedBooking,
+              payment._id!.toString()
+            );
           }
         }
       } catch (error) {
@@ -64,24 +95,34 @@ export class UpdateBookingStatusUseCase implements IUpdateBookingStatusUseCase {
     }
   }
 
-  private async processWalletUpdates(bookingId: string, booking: any, paymentId: string): Promise<void> {
-    const isAlreadyApproved = await this.bookingRepository.isBothApproved(bookingId);
-    console.log('is both applied =>', isAlreadyApproved)
+  private async processWalletUpdates(
+    bookingId: string,
+    booking: any,
+    paymentId: string
+  ): Promise<void> {
+    const isAlreadyApproved = await this.bookingRepository.isBothApproved(
+      bookingId
+    );
+    console.log("is both applied =>", isAlreadyApproved);
     if (!isAlreadyApproved) {
       return;
     }
 
-    console.log('both approved')
+    const commissionRate = 0.09;
+    const commissionAmount = booking.totalPrice * commissionRate;
+    const vendorAmount = booking.totalPrice - commissionAmount;
+
+    console.log("both approved");
 
     await Promise.all([
       this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
         booking.vendorId,
-        booking.totalPrice,
+        vendorAmount,
         paymentId
       ),
       this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
         "67e9486d0d98008b2de2c7ce" as string,
-        booking.totalPrice * -1,
+        (booking.totalPrice - commissionAmount) * -1,
         paymentId
       ),
     ]);
