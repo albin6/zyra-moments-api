@@ -33,12 +33,16 @@ export class UpdateFundReleaseRequestStatusUseCase
       );
     }
 
+    const commissionRate = 0.09;
+    const commissionAmount = request.totalAmount * commissionRate;
+    const organizerAmount = request.totalAmount - commissionAmount;
+
     const payment = await this.paymentRepository.save({
       userId: "67e9486d0d98008b2de2c7ce" as any,
       receiverId: request.organizerId,
       createrType: "Admin",
       receiverType: "Client",
-      amount: request.totalAmount,
+      amount: organizerAmount,
       currency: "usd",
       purpose: "ticket-purchase",
       status: "succeeded",
@@ -46,10 +50,6 @@ export class UpdateFundReleaseRequestStatusUseCase
       transactionId: `TXN_${Date.now()}`,
       createdAt: new Date(),
     });
-
-    const commissionRate = 0.09;
-    const commissionAmount = request.totalAmount * commissionRate;
-    const organizerAmount = request.totalAmount - commissionAmount;
 
     await Promise.all([
       await this.walletRepository.findWalletByUserIdAndUpdateBalanceAndAddPaymentId(
