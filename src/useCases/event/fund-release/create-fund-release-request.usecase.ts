@@ -23,6 +23,19 @@ export class CreateFundReleaseRequestUseCase
     organizerId: string,
     message: string
   ): Promise<IFundReleaseRequestEntity> {
+    const isAlreadyRequested =
+      await this.fundReleaseRequestRepository.findByEventIdAndOrganizerId(
+        eventId,
+        organizerId
+      );
+
+    if (isAlreadyRequested) {
+      throw new CustomError(
+        ERROR_MESSAGES.ALREADY_REQUESTED,
+        HTTP_STATUS.CONFLICT
+      );
+    }
+
     const purchasedTicket =
       await this.ticketRepository.findActiveTicketsByEventId(eventId);
 
@@ -34,7 +47,7 @@ export class CreateFundReleaseRequestUseCase
 
     const ticketSalesCount = purchasedTicket.length;
     const totalAmount = event.pricePerTicket * ticketSalesCount;
-    
+
     const request: IFundReleaseRequestEntity = {
       requestId: generateRandomUUID(),
       eventId: eventId as any,

@@ -30,7 +30,7 @@ export class FundReleaseRequestRepository
 
   async updateStatus(
     requestId: string,
-    status: IFundReleaseRequestEntity["status"],
+    status: IFundReleaseRequestEntity["status"]
   ): Promise<IFundReleaseRequestEntity | null> {
     return await FundReleaseRequestModel.findOneAndUpdate(
       { requestId },
@@ -40,5 +40,12 @@ export class FundReleaseRequestRepository
       },
       { new: true }
     ).exec();
+  }
+
+  async findByEventIdAndOrganizerId(
+    eventId: any,
+    organizerId: any
+  ): Promise<IFundReleaseRequestEntity | null> {
+    return await FundReleaseRequestModel.findOne({ eventId, organizerId });
   }
 }

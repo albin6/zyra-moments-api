@@ -41,6 +41,7 @@ export const ERROR_MESSAGES = {
   NO_TOKEN: "Authentication error: No token provided",
   PAYMENT_NOT_FOUND: 'Payment not found.',
   TICKET_NOT_FOUND: 'Ticket not found.',
+  ALREADY_REQUESTED: "Already requested.",
   ALREADY_REVIEWED: "Client has already reviewed this vendor",
   FAILED_TO_RESET: "Failed to reset unread count",
   FAILED_TO_MARK_ATTENDANCE: "Failed to mark messages as read",

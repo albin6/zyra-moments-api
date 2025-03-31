@@ -2,7 +2,12 @@ import { IFundReleaseRequestEntity } from "../../models/fund-release-request.ent
 
 export interface IFundReleaseRequestRepository {
     create(request: IFundReleaseRequestEntity): Promise<IFundReleaseRequestEntity>;
+
     findAll(): Promise<IFundReleaseRequestEntity[]>;
+
     findById(requestId: string): Promise<IFundReleaseRequestEntity | null>;
+
     updateStatus(requestId: string, status: IFundReleaseRequestEntity["status"]): Promise<IFundReleaseRequestEntity | null>;
+
+    findByEventIdAndOrganizerId(eventId: any, organizerId: any) : Promise<IFundReleaseRequestEntity | null>
   }
