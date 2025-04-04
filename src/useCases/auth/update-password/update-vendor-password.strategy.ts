@@ -3,11 +3,13 @@ import { IVendorRepository } from "../../../entities/repositoryInterfaces/vendor
 import { IUpdatePasswordStrategy } from "./update-password-strategy.interface";
 import { CustomError } from "../../../entities/utils/custom-error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { IBcrypt } from "../../../frameworks/security/bcrypt.interface";
 
 @injectable()
 export class UpdateVendorPasswordStrategy implements IUpdatePasswordStrategy {
   constructor(
-    @inject("IVendorRepository") private vendorRepository: IVendorRepository
+    @inject("IVendorRepository") private vendorRepository: IVendorRepository,
+    @inject("IPasswordBcrypt") private passwordBcrypt: IBcrypt
   ) {}
 
   async update(email: string, password: string): Promise<void> {
@@ -20,9 +22,11 @@ export class UpdateVendorPasswordStrategy implements IUpdatePasswordStrategy {
       );
     }
 
+    const hashedPassword = await this.passwordBcrypt.hash(password);
+
     await this.vendorRepository.findByIdAndUpdatePassword(
       isVendorExists._id,
-      password
+      hashedPassword
     );
   }
 }
