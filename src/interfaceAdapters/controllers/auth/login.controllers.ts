@@ -69,6 +69,8 @@ export class LoginUserController implements ILoginUserController {
         email: user.email,
         role: user.role,
       },
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
     });
   }
 }
