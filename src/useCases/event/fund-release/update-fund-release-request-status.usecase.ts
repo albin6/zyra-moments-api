@@ -38,7 +38,7 @@ export class UpdateFundReleaseRequestStatusUseCase
     const organizerAmount = request.totalAmount - commissionAmount;
 
     const payment = await this.paymentRepository.save({
-      userId: "67e9486d0d98008b2de2c7ce" as any,
+      userId: "67fcd92c889927aedb0159e6" as any,
       receiverId: request.organizerId,
       createrType: "Admin",
       receiverType: "Client",
@@ -59,7 +59,7 @@ export class UpdateFundReleaseRequestStatusUseCase
         true
       ),
       this.walletRepository.findWalletByUserIdAndUpdateBalanceForCancel(
-        "67e9486d0d98008b2de2c7ce" as string,
+        "67fcd92c889927aedb0159e6" as string,
         (request.totalAmount - commissionAmount) * -1,
         payment._id as any
       ),

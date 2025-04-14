@@ -13,7 +13,7 @@ export class CancelTicketUseCase implements ICancelTicketUseCase {
     @inject("ITicketRepository") private ticketRepository: ITicketRepository,
     @inject("IWalletRepository") private walletRepository: IWalletRepository,
     @inject("IPaymentRepository") private paymentRepository: IPaymentRepository,
-    @inject("IPaymentService") private paymentService: IPaymentService,
+    @inject("IPaymentService") private paymentService: IPaymentService
   ) {}
   async execute(ticketId: any): Promise<void> {
     const ticket = await this.ticketRepository.findByIdAndCancel(ticketId);
@@ -25,9 +25,9 @@ export class CancelTicketUseCase implements ICancelTicketUseCase {
       );
     }
 
-    console.log('ticket of the pament',ticket)
+    console.log("ticket of the pament", ticket);
 
-    const payment = await this.paymentRepository.findById(ticket.paymentId)
+    const payment = await this.paymentRepository.findById(ticket.paymentId);
 
     if (payment && payment.paymentIntentId && payment.status === "succeeded") {
       await this.paymentService.refundPayment(payment.paymentIntentId);
@@ -43,8 +43,8 @@ export class CancelTicketUseCase implements ICancelTicketUseCase {
         ticket.paymentId
       ),
       await this.walletRepository.findWalletByUserIdAndUpdateBalanceForCancel(
-        "67e9486d0d98008b2de2c7ce" as string,
-        populatedTicket.eventId.pricePerTicket * -1,
+        "67fcd92c889927aedb0159e6" as string,
+        populatedTicket.eventId.pricePerTicket * -1
       ),
     ]);
   }

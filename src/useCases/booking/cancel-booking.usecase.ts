@@ -39,7 +39,7 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
         payment?._id
       ),
       this.walletRepository.findWalletByUserIdAndUpdateBalanceForCancel(
-        "67e9486d0d98008b2de2c7ce" as string,
+        "67fcd92c889927aedb0159e6" as string,
         booking.totalPrice * -1
       ),
     ]);
