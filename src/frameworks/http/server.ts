@@ -43,12 +43,12 @@ export class Server {
 
     this._app.use(cookieParser());
 
-    this._app.use(
-      rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 1000,
-      })
-    );
+    // this._app.use(
+    //   rateLimit({
+    //     windowMs: 15 * 60 * 1000,
+    //     max: 1000,
+    //   })
+    // );
   }
 
   private configureSocketIO(): void {
