@@ -32,7 +32,6 @@ export class CategoryRequestRepository implements ICategoryRequestRepository {
     return await CategoryRequestModel.find()
       .populate({
         path: "vendorId",
-        select: "firstName lastName",
       })
       .populate({
         path: "categoryId",
