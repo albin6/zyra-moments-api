@@ -19,15 +19,17 @@ export class RefreshTokenController implements IRefreshTokenController {
     @inject("IRefreshTokenUseCase")
     private refreshTokenUseCase: IRefreshTokenUseCase
   ) {}
-  async handle(req: Request, res: Response):Promise<void> {
+  async handle(req: Request, res: Response): Promise<void> {
     try {
       const refreshToken = (req as CustomRequest).user.refresh_token;
       const newTokens = this.refreshTokenUseCase.execute(refreshToken);
       const accessTokenName = `${newTokens.role}_access_token`;
       updateCookieWithAccessToken(res, newTokens.accessToken, accessTokenName);
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ success: true, message: SUCCESS_MESSAGES.OPERATION_SUCCESS });
+      res.status(HTTP_STATUS.OK).json({
+        success: true,
+        message: SUCCESS_MESSAGES.OPERATION_SUCCESS,
+        token: newTokens.accessToken,
+      });
     } catch (error) {
       clearAuthCookies(
         res,
