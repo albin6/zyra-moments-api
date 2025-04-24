@@ -14,8 +14,8 @@ services:
       - EMAIL_USER=zyramoments.org@gmail.com
       - EMAIL_PASS=zspa bwtv nstp ofjh
       - JWT_SECRET_KEY=01071ad1938f50750fbd23e54b26fa10ea14ae1bd73ff38fa8574710059db438876510160e24e00a9b38
-      - JWT_ACCESS_EXPIRES_IN=5m
-      - JWT_REFRSH_EXPIRES_IN=30m
+      - JWT_ACCESS_EXPIRES_IN=1d
+      - JWT_REFRSH_EXPIRES_IN=7d
       - STRIPE_PK=pk_test_51QE3X1K0oDaPVFn3LIORvughq1FbieLfPX2EsvTWv5Qze2L5lcCfoYbgaPzu631Y3bigxeNTNLdB6qIppsRTrZ9s00Ryy6xijQ
       - STRIPE_SK=sk_test_51QE3X1K0oDaPVFn3rNQhFFabqyMkvmNda6HVrwezGdpeMyfxkteJO9EHHhavgNh9wLqStjs5TksQo0aJznq1WpxX003k9zyQpJ
       - STRIPE_WEBHOOK_SECRET=whsec_ebklHj2KFSwsUA6TFmSFqA8DCm5zX0ph
