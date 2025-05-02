@@ -8,6 +8,7 @@ import {
   getAllUsersController,
   getDashboardStatsController,
   getPaginatedEventsController,
+  getVendorProfileDetailsController,
   getWalletDetailsOfUserController,
   logoutUserController,
   refreshTokenController,
@@ -132,6 +133,18 @@ export class AdminRoutes extends BaseRoute {
       authorizeRole(["admin"]),
       asyncHandler(
         updateUserStatusController.handle.bind(updateUserStatusController)
+      )
+    );
+
+    // vendor details
+    this.router.get(
+      "/admin/:vendorId/details",
+      verifyAuth,
+      authorizeRole(["admin"]),
+      asyncHandler(
+        getVendorProfileDetailsController.handle.bind(
+          getVendorProfileDetailsController
+        )
       )
     );
 
