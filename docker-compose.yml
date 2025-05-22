@@ -7,8 +7,8 @@ services:
       - PORT=8080
       - REDIS_URI=redis://redis:6379
       - NODE_ENV=production
-      - CORS_ALLOWED_ORIGIN_ONE=https://zyramoments.in
-      - CORS_ALLOWED_ORIGIN_TWO=https://www.zyramoments.in
+      - CORS_ALLOWED_ORIGIN_ONE=https://zyra-moments-client.vercel.app
+      - CORS_ALLOWED_ORIGIN_TWO=https://zyra-moments-client.vercel.app
       - CORS_ALLOWED_ORIGIN_LOCAL=http://localhost:5173
       - DATABASE_URI=mongodb+srv://albinpariyarath:BPpLWkO7GqMfRJSw@zyraeventscluster.q9pgf.mongodb.net/zyra-moments?retryWrites=true&w=majority&appName=zyraEventsCluster
       - EMAIL_USER=zyramoments.org@gmail.com
