@@ -38,12 +38,17 @@ export class ChatController implements IChatController {
   initialize(server: Server): void {
     this.io = new SocketIOServer(server, {
       cors: {
-        origin: [config.cors.ALLOWED_ORIGIN_ONE, config.cors.ALLOWED_ORIGIN_TWO, config.cors.ALLOWED_ORIGIN_LOCAL],
+        origin: [
+          config.cors.ALLOWED_ORIGIN_ONE,
+          config.cors.ALLOWED_ORIGIN_TWO,
+          config.cors.ALLOWED_ORIGIN_LOCAL_ONE,
+          config.cors.ALLOWED_ORIGIN_LOCAL_TWO,
+        ],
         methods: ["GET", "POST"],
         credentials: true,
       },
       path: "/api/v_1/_chat",
-      maxHttpBufferSize: 1e8
+      maxHttpBufferSize: 1e8,
       // allowRequest: (
       //   req: IncomingMessage,
       //   callback: (err: string | null | undefined, success: boolean) => void
@@ -135,7 +140,9 @@ export class ChatController implements IChatController {
             ?.to(userId)
             .to(recipientId.toString())
             .emit("messagesUpdated", messages);
-            this.io?.to(chatRoomId).emit("readReceiptUpdate", messages[messages.length - 1]);
+          this.io
+            ?.to(chatRoomId)
+            .emit("readReceiptUpdate", messages[messages.length - 1]);
           this.io
             ?.to(userId)
             .to(recipientId.toString())
@@ -161,7 +168,12 @@ export class ChatController implements IChatController {
           const chatRoom = await this.chatRoomRepository.findById(chatRoomId);
           if (!chatRoom) throw new Error("Chat room not found");
 
-          console.log('here is the content => ', content, 'here is the file if have =>', file)
+          console.log(
+            "here is the content => ",
+            content,
+            "here is the file if have =>",
+            file
+          );
           const message = await this.sendMessageUseCase.execute(
             senderType === "Client" ? senderId : chatRoom.clientId.toString(),
             senderType === "Vendor" ? senderId : chatRoom.vendorId.toString(),
@@ -169,9 +181,9 @@ export class ChatController implements IChatController {
             senderType,
             content,
             chatRoomId,
-            file,
+            file
           );
-          console.log('here is the message =>',message)
+          console.log("here is the message =>", message);
           this.io
             ?.to(chatRoom.clientId.toString())
             .to(chatRoom.vendorId.toString())
