@@ -33,7 +33,7 @@ export class Server {
   private configureMiddlewares(): void {
     this._app.use(helmet());
 
-    this._app.use(cors(corsOptions));
+    // this._app.use(cors(corsOptions));
 
     this._app.use(dataParser);
 
