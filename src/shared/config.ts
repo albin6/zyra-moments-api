@@ -4,9 +4,14 @@ dotenv.config();
 export const config = {
   // CORS Configuration
   cors: {
-    ALLOWED_ORIGIN_ONE: process.env.CORS_ALLOWED_ORIGIN_ONE || "http://localhost:5173",
-    ALLOWED_ORIGIN_TWO: process.env.CORS_ALLOWED_ORIGIN_TWO || "http://localhost:5174",
-    ALLOWED_ORIGIN_LOCAL: process.env.CORS_ALLOWED_ORIGIN_LOCAL || "http://localhost:5174",
+    ALLOWED_ORIGIN_ONE:
+      process.env.CORS_ALLOWED_ORIGIN_ONE || "http://localhost:5173",
+    ALLOWED_ORIGIN_TWO:
+      process.env.CORS_ALLOWED_ORIGIN_TWO || "http://localhost:5174",
+    ALLOWED_ORIGIN_LOCAL_ONE:
+      process.env.ALLOWED_ORIGIN_LOCAL_ONE || "http://localhost:5174",
+    ALLOWED_ORIGIN_LOCAL_TWO:
+      process.env.ALLOWED_ORIGIN_LOCAL_TWO || "http://localhost:51743",
   },
 
   // Server Configuration
@@ -22,7 +27,11 @@ export const config = {
   },
 
   redis: {
-    URI: process.env.REDIS_URI || `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`,
+    URI:
+      process.env.REDIS_URI ||
+      `redis://${process.env.REDIS_HOST || "localhost"}:${
+        process.env.REDIS_PORT || 6379
+      }`,
   },
 
   // Database Configuration
